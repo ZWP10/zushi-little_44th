@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375px, initial-scale=1.0">
+<title>S.C.ZUSHI LITTLE</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#1e40af',
+secondary: '#ef4444'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+.tab-active { color: #1e40af; border-bottom: 2px solid #1e40af; }
+.match-result:nth-child(odd) { background-color: #f8fafc; }
+.match-result:hover { background-color: #f1f5f9; }
+.gallery-container {
+position: relative;
+width: 100%;
+height: 280px;
+overflow: hidden;
+}
+.gallery-image {
+position: absolute;
+width: 100%;
+height: 100%;
+object-fit: cover;
+opacity: 0;
+transition: opacity 0.5s ease-in-out;
+}
+.gallery-image.active {
+opacity: 1;
+}
+</style>
+</head>
+<body class="w-[375px] min-h-screen mx-auto bg-white">
+<nav class="fixed top-0 w-[375px] z-50 bg-white border-b">
+<div class="flex items-center justify-between px-4 h-14">
+<div class="flex items-center">
+<img src="https://static.readdy.ai/image/4482605d7aa867cfabf49b456a941706/3cf28294e95dc03135f4d8aad00ad5d3.png" alt="ZLSC Logo" class="h-10">
+</div>
+<button id="menuButton" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line text-xl"></i>
+</button>
+<div id="drawer" class="fixed top-0 right-0 w-64 h-full bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-lg">
+<div class="flex justify-between items-center p-4 border-b">
+<span class="text-lg font-bold">メニュー</span>
+<button id="closeDrawer" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<nav class="p-4">
+<a href="#" class="drawer-link flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg" data-section="0">
+<i class="ri-team-line text-xl"></i>
+<span>選手</span>
+</a>
+<a href="#" class="drawer-link flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg" data-section="1">
+<i class="ri-user-star-line text-xl"></i>
+<span>コーチ</span>
+</a>
+<a href="#" class="drawer-link flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg" data-section="2">
+<i class="ri-calendar-line text-xl"></i>
+<span>試合</span>
+</a>
+<a href="#" class="drawer-link flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg" data-section="3">
+<i class="ri-image-line text-xl"></i>
+<span>写真</span>
+</a>
+<a href="#" class="drawer-link flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg" data-section="4">
+<i class="ri-video-line text-xl"></i>
+<span>動画</span>
+</a>
+</nav>
+</div>
+<div id="overlay" class="fixed inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out z-40"></div>
+<script>
+const menuButton = document.getElementById('menuButton');
+const drawer = document.getElementById('drawer');
+const closeDrawer = document.getElementById('closeDrawer');
+const overlay = document.getElementById('overlay');
+function openDrawer() {
+drawer.classList.remove('translate-x-full');
+overlay.classList.remove('opacity-0', 'pointer-events-none');
+overlay.classList.add('opacity-50');
+document.body.style.overflow = 'hidden';
+}
+function closeDrawerMenu() {
+drawer.classList.add('translate-x-full');
+overlay.classList.remove('opacity-50');
+overlay.classList.add('opacity-0', 'pointer-events-none');
+document.body.style.overflow = '';
+}
+menuButton.addEventListener('click', openDrawer);
+closeDrawer.addEventListener('click', closeDrawerMenu);
+overlay.addEventListener('click', closeDrawerMenu);
+</script>
+</div>
+</nav>
+<main class="pt-14 pb-16">
+<div id="playerSection" class="hidden">
+<div class="p-4">
+<h2 class="text-xl font-bold mb-4">選手一覧</h2>
+<div class="grid gap-4">
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">3</div>
+<div class="ml-4">
+<h3 class="font-bold">福田 大翔</h3>
+<span class="text-sm text-gray-600">FW</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">4</div>
+<div class="ml-4">
+<h3 class="font-bold">佐藤 碧波</h3>
+<span class="text-sm text-gray-600">FW/MF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">5</div>
+<div class="ml-4">
+<h3 class="font-bold">北田 一成</h3>
+<span class="text-sm text-gray-600">DF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">8</div>
+<div class="ml-4">
+<h3 class="font-bold">坂本 丈青</h3>
+<span class="text-sm text-gray-600">FW</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">10</div>
+<div class="ml-4">
+<h3 class="font-bold">佐渡島 伊平</h3>
+<span class="text-sm text-gray-600">MF/FW</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">11</div>
+<div class="ml-4">
+<h3 class="font-bold">田坂 洋人</h3>
+<span class="text-sm text-gray-600">MF/DF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">12</div>
+<div class="ml-4">
+<h3 class="font-bold">滝澤 陽斗</h3>
+<span class="text-sm text-gray-600">MF/DF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">13</div>
+<div class="ml-4">
+<h3 class="font-bold">玉野 寛也</h3>
+<span class="text-sm text-gray-600">MF/DF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">14</div>
+<div class="ml-4">
+<h3 class="font-bold">鎌田 直</h3>
+<span class="text-sm text-gray-600">MF/DF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">15</div>
+<div class="ml-4">
+<h3 class="font-bold">丸山 脩太朗</h3>
+<span class="text-sm text-gray-600">DF/MF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">16</div>
+<div class="ml-4">
+<h3 class="font-bold">鈴木 礼恩</h3>
+<span class="text-sm text-gray-600">FW/MF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">17</div>
+<div class="ml-4">
+<h3 class="font-bold">中本 燦人</h3>
+<span class="text-sm text-gray-600">DF/MF/GK</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">18</div>
+<div class="ml-4">
+<h3 class="font-bold">渡辺 夏生</h3>
+<span class="text-sm text-gray-600">MF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">19</div>
+<div class="ml-4">
+<h3 class="font-bold">小菅 海琉</h3>
+<span class="text-sm text-gray-600">DF</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">20</div>
+<div class="ml-4">
+<h3 class="font-bold">山梨 寛治</h3>
+<span class="text-sm text-gray-600">MF/DF/GK</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="coachSection" class="hidden">
+<div class="p-4">
+<h2 class="text-xl font-bold mb-4">コーチ一覧</h2>
+<div class="grid gap-4">
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">滝澤コーチ</h3>
+<span class="text-sm text-gray-600">ヘッドコーチ</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">坂本コーチ</h3>
+<span class="text-sm text-gray-600">ヘッドコーチ</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">玉野コーチ</h3>
+<span class="text-sm text-gray-600">テクニカルコーチ</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">佐藤コーチ</h3>
+<span class="text-sm text-gray-600">テクニカルコーチ</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">福田コーチ</h3>
+<span class="text-sm text-gray-600">コーチ</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">鎌田コーチ</h3>
+<span class="text-sm text-gray-600">コーチ</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">中本コーチ</h3>
+<span class="text-sm text-gray-600">コーチ／カメラマン</span>
+</div>
+<div class="bg-gradient-to-r from-secondary/10 to-transparent p-4 rounded-lg">
+<h3 class="font-bold">内野コーチ</h3>
+<span class="text-sm text-gray-600">逗子リトルGM</span>
+</div>
+</div>
+</div>
+</div>
+<div id="photoSection" class="hidden">
+<div class="p-4">
+<h2 class="text-xl font-bold mb-4">写真一覧</h2>
+<a href="https://photos.app.goo.gl/bEWWk1W6vW3NrPLt8" target="_blank" class="block w-full py-3 px-4 bg-primary text-white text-center rounded-button font-medium">
+写真ギャラリーを見る
+</a>
+</div>
+</div>
+<div id="videoSection" class="hidden">
+<div class="p-4">
+<h2 class="text-xl font-bold mb-4">動画一覧</h2>
+<div class="space-y-6">
+<div class="aspect-video rounded-lg overflow-hidden">
+<h3 class="text-lg font-medium mb-2">The graduate</h3>
+<iframe class="w-full h-full" src="https://www.youtube.com/embed/obQbSbonlaQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="aspect-video rounded-lg overflow-hidden">
+<h3 class="text-lg font-medium mb-2">FAリーグ開幕</h3>
+<iframe class="w-full h-full" src="https://www.youtube.com/embed/Yskr4dGtjtI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="aspect-video rounded-lg overflow-hidden">
+<h3 class="text-lg font-medium mb-2">合宿2022</h3>
+<iframe class="w-full h-full" src="https://www.youtube.com/embed/4Q5FmkCkiI4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+</div>
+<div id="mainContent">
+<div class="relative h-[280px] bg-gray-100">
+<div class="gallery-container" id="galleryContainer">
+<img src="https://static.readdy.ai/image/4482605d7aa867cfabf49b456a941706/ec6bce66faea3eccf4043b7b145f2f0a.jpeg" class="gallery-image active" alt="Team Photo">
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent text-white">
+<h1 class="text-2xl font-bold">Connected Beyond the Field</h1>
+</div>
+</div>
+<section class="px-4 py-6">
+<h2 class="text-xl font-bold mb-4">About Us</h2>
+<p class="text-sm text-gray-600 leading-relaxed">
+We are the 44th class of Zushi Little SC. We will graduate in March 2025. We will never forget the days we spent with our teammates. Thank you for all the memories.
+</p>
+</section>
+<section class="px-4 py-6 bg-gray-50">
+<h2 class="text-xl font-bold mb-4">最近の試合結果</h2>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/2/24</td>
+<td class="py-3 px-3 text-sm font-medium">大楠少年</td>
+<td class="py-3 px-3 text-sm text-primary text-right">2-2 (PK 3-2)</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/2/11</td>
+<td class="py-3 px-3 text-sm font-medium">シーガルズW</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/2/11</td>
+<td class="py-3 px-3 text-sm font-medium">シーガルズG</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-1 (PK 2-3)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<a href="#" class="block text-center text-sm text-primary mt-4" id="showAllMatches">すべての試合結果を見る</a>
+</div>
+</section>
+<div id="matchSection" class="hidden">
+<div class="p-4">
+<h2 class="text-xl font-bold mb-4">試合結果一覧</h2>
+<div class="space-y-6">
+<div>
+<h3 class="text-lg font-bold mb-3">半島大会U12</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/2/24</td>
+<td class="py-3 px-3 text-sm font-medium">大楠少年</td>
+<td class="py-3 px-3 text-sm text-primary text-right">2-2 (PK 3-2)</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/2/11</td>
+<td class="py-3 px-3 text-sm font-medium">シーガルズW</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/2/11</td>
+<td class="py-3 px-3 text-sm font-medium">シーガルズG</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-1 (PK 2-3)</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/1/26</td>
+<td class="py-3 px-3 text-sm font-medium">三浦旭</td>
+<td class="py-3 px-3 text-sm text-primary text-right">2-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/1/26</td>
+<td class="py-3 px-3 text-sm font-medium">久里浜トパーズ</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-3">日産カップ</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/1/13</td>
+<td class="py-3 px-3 text-sm font-medium">石川SC</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-2</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/1/12</td>
+<td class="py-3 px-3 text-sm font-medium">大空KSC</td>
+<td class="py-3 px-3 text-sm text-primary text-right">0-0 (PK 3-2)</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2025/1/12</td>
+<td class="py-3 px-3 text-sm font-medium">中和田FC</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-3">海人カップU12</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/12/1</td>
+<td class="py-3 px-3 text-sm font-medium">夏島</td>
+<td class="py-3 px-3 text-sm text-primary text-right">0-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/12/1</td>
+<td class="py-3 px-3 text-sm font-medium">いずみ</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/12/1</td>
+<td class="py-3 px-3 text-sm font-medium">JGK</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/12/1</td>
+<td class="py-3 px-3 text-sm font-medium">ALLZ</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-3">FAリーグ</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/10/13</td>
+<td class="py-3 px-3 text-sm font-medium">夏島FC</td>
+<td class="py-3 px-3 text-sm text-primary text-right">2-2</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/10/12</td>
+<td class="py-3 px-3 text-sm font-medium">おなりレパーズ</td>
+<td class="py-3 px-3 text-sm text-primary text-right">0-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/10/12</td>
+<td class="py-3 px-3 text-sm font-medium">石川SC</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/23</td>
+<td class="py-3 px-3 text-sm font-medium">小和田FC</td>
+<td class="py-3 px-3 text-sm text-primary text-right">0-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/23</td>
+<td class="py-3 px-3 text-sm font-medium">FC50.4</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/21</td>
+<td class="py-3 px-3 text-sm font-medium">三春</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/21</td>
+<td class="py-3 px-3 text-sm font-medium">鵠南</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-4</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/14</td>
+<td class="py-3 px-3 text-sm font-medium">八松</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-3</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/14</td>
+<td class="py-3 px-3 text-sm font-medium">六会湘南台</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-3</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/6/9</td>
+<td class="py-3 px-3 text-sm font-medium">鵠南</td>
+<td class="py-3 px-3 text-sm text-primary text-right">2-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/6/9</td>
+<td class="py-3 px-3 text-sm font-medium">スカイブルー</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/6/2</td>
+<td class="py-3 px-3 text-sm font-medium">ゴールデン</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-2</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/6/2</td>
+<td class="py-3 px-3 text-sm font-medium">レオーネ</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/6/1</td>
+<td class="py-3 px-3 text-sm font-medium">久里浜</td>
+<td class="py-3 px-3 text-sm text-primary text-right">2-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/4/29</td>
+<td class="py-3 px-3 text-sm font-medium">鎌倉深沢</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-3</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/4/29</td>
+<td class="py-3 px-3 text-sm font-medium">夏島</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-3">ZASA</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/16</td>
+<td class="py-3 px-3 text-sm font-medium">ALLZ-Blue</td>
+<td class="py-3 px-3 text-sm text-primary text-right">7-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/16</td>
+<td class="py-3 px-3 text-sm font-medium">ALLZ-Yellow</td>
+<td class="py-3 px-3 text-sm text-primary text-right">3-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/16</td>
+<td class="py-3 px-3 text-sm font-medium">逗子少年</td>
+<td class="py-3 px-3 text-sm text-primary text-right">4-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/9/16</td>
+<td class="py-3 px-3 text-sm font-medium">GAROTO</td>
+<td class="py-3 px-3 text-sm text-primary text-right">1-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-3">AGカップU12</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b">
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">日付</th>
+<th class="text-left py-2 px-3 text-sm font-medium text-gray-600">対戦相手</th>
+<th class="text-right py-2 px-3 text-sm font-medium text-gray-600">結果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/5/12</td>
+<td class="py-3 px-3 text-sm font-medium">ALLZ-Y</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">1-2</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/5/12</td>
+<td class="py-3 px-3 text-sm font-medium">ALLZ-B</td>
+<td class="py-3 px-3 text-sm text-primary text-right">11-0</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/5/12</td>
+<td class="py-3 px-3 text-sm font-medium">GAROTO</td>
+<td class="py-3 px-3 text-sm text-secondary text-right">0-1</td>
+</tr>
+<tr class="border-b bg-white">
+<td class="py-3 px-3 text-sm text-gray-500">2024/5/12</td>
+<td class="py-3 px-3 text-sm font-medium">逗子少年</td>
+<td class="py-3 px-3 text-sm text-primary text-right">4-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 w-[375px] bg-white border-t">
+<div class="grid grid-cols-5 h-16">
+<a href="#" class="flex flex-col items-center justify-center space-y-1">
+<i class="ri-team-line text-xl"></i>
+<span class="text-[10px]">選手</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center space-y-1">
+<i class="ri-user-star-line text-xl"></i>
+<span class="text-[10px]">コーチ</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center space-y-1">
+<i class="ri-calendar-line text-xl"></i>
+<span class="text-[10px]">試合</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center space-y-1">
+<i class="ri-image-line text-xl"></i>
+<span class="text-[10px]">写真</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center space-y-1">
+<i class="ri-video-line text-xl"></i>
+<span class="text-[10px]">動画</span>
+</a>
+</div>
+</nav>
+<script>
+const mainContent = document.getElementById('mainContent');
+const playerSection = document.getElementById('playerSection');
+const coachSection = document.getElementById('coachSection');
+const matchSection = document.getElementById('matchSection');
+document.getElementById('showAllMatches').addEventListener('click', function(e) {
+e.preventDefault();
+mainContent.classList.add('hidden');
+matchSection.classList.remove('hidden');
+});
+function switchSection(index) {
+  document.querySelectorAll('nav.fixed.bottom-0 a').forEach(l => l.classList.remove('tab-active'));
+  document.querySelectorAll('nav.fixed.bottom-0 a')[index].classList.add('tab-active');
+  mainContent.classList.add('hidden');
+  playerSection.classList.add('hidden');
+  coachSection.classList.add('hidden');
+  matchSection.classList.add('hidden');
+  photoSection.classList.add('hidden');
+  videoSection.classList.add('hidden');
+  if (index === 0) { // Players
+    playerSection.classList.remove('hidden');
+  } else if (index === 1) { // Coaches
+    coachSection.classList.remove('hidden');
+  } else if (index === 2) { // Matches
+    matchSection.classList.remove('hidden');
+  } else if (index === 3) { // Photos
+    photoSection.classList.remove('hidden');
+  } else if (index === 4) { // Videos
+    videoSection.classList.remove('hidden');
+  } else {
+    mainContent.classList.remove('hidden');
+  }
+  
+  closeDrawerMenu();
+}
+document.querySelectorAll('nav.fixed.bottom-0 a').forEach((link, index) => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    switchSection(index);
+  });
+});
+document.querySelectorAll('.drawer-link').forEach((link) => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const sectionIndex = parseInt(this.dataset.section);
+    switchSection(sectionIndex);
+  });
+});
+</script>
+</body>
+</html>
