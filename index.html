@@ -61,7 +61,9 @@ opacity: 1;
 <nav class="fixed top-0 w-[375px] z-50 bg-white border-b">
 <div class="flex items-center justify-between px-4 h-14">
 <div class="flex items-center">
+<a href="#" class="block active:opacity-75 transition-opacity" onclick="switchToHome(event)">
 <img src="https://static.readdy.ai/image/4482605d7aa867cfabf49b456a941706/3cf28294e95dc03135f4d8aad00ad5d3.png" alt="ZLSC Logo" class="h-10">
+</a>
 </div>
 <button id="menuButton" class="w-8 h-8 flex items-center justify-center">
 <i class="ri-menu-line text-xl"></i>
@@ -695,6 +697,17 @@ e.preventDefault();
 mainContent.classList.add('hidden');
 matchSection.classList.remove('hidden');
 });
+function switchToHome(e) {
+e.preventDefault();
+document.querySelectorAll('nav.fixed.bottom-0 a').forEach(l => l.classList.remove('tab-active'));
+mainContent.classList.remove('hidden');
+playerSection.classList.add('hidden');
+coachSection.classList.add('hidden');
+matchSection.classList.add('hidden');
+photoSection.classList.add('hidden');
+videoSection.classList.add('hidden');
+closeDrawerMenu();
+}
 function switchSection(index) {
 document.querySelectorAll('nav.fixed.bottom-0 a').forEach(l => l.classList.remove('tab-active'));
 document.querySelectorAll('nav.fixed.bottom-0 a')[index].classList.add('tab-active');
