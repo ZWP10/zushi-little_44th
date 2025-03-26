@@ -341,7 +341,7 @@ overlay.addEventListener('click', closeDrawerMenu);
 <section class="px-4 py-6">
 <h2 class="text-xl font-bold mb-4">About Us</h2>
 <p class="text-sm text-gray-600 leading-relaxed">
-We are the 44th class of Zushi Little SC. We will graduate in March 2025. We will never forget the days we spent with our teammates. Thank you for all the memories.
+We are the 44th of Zushi Little SC. Our journey with Zushi Little SC came to an end in March 2025. We will never forget the days we spent with our teammates. Thank you for all the memories.
 </p>
 </section>
 <section class="px-4 py-6 bg-gray-50">
@@ -696,42 +696,41 @@ mainContent.classList.add('hidden');
 matchSection.classList.remove('hidden');
 });
 function switchSection(index) {
-  document.querySelectorAll('nav.fixed.bottom-0 a').forEach(l => l.classList.remove('tab-active'));
-  document.querySelectorAll('nav.fixed.bottom-0 a')[index].classList.add('tab-active');
-  mainContent.classList.add('hidden');
-  playerSection.classList.add('hidden');
-  coachSection.classList.add('hidden');
-  matchSection.classList.add('hidden');
-  photoSection.classList.add('hidden');
-  videoSection.classList.add('hidden');
-  if (index === 0) { // Players
-    playerSection.classList.remove('hidden');
-  } else if (index === 1) { // Coaches
-    coachSection.classList.remove('hidden');
-  } else if (index === 2) { // Matches
-    matchSection.classList.remove('hidden');
-  } else if (index === 3) { // Photos
-    photoSection.classList.remove('hidden');
-  } else if (index === 4) { // Videos
-    videoSection.classList.remove('hidden');
-  } else {
-    mainContent.classList.remove('hidden');
-  }
-  
-  closeDrawerMenu();
+document.querySelectorAll('nav.fixed.bottom-0 a').forEach(l => l.classList.remove('tab-active'));
+document.querySelectorAll('nav.fixed.bottom-0 a')[index].classList.add('tab-active');
+mainContent.classList.add('hidden');
+playerSection.classList.add('hidden');
+coachSection.classList.add('hidden');
+matchSection.classList.add('hidden');
+photoSection.classList.add('hidden');
+videoSection.classList.add('hidden');
+if (index === 0) { // Players
+playerSection.classList.remove('hidden');
+} else if (index === 1) { // Coaches
+coachSection.classList.remove('hidden');
+} else if (index === 2) { // Matches
+matchSection.classList.remove('hidden');
+} else if (index === 3) { // Photos
+photoSection.classList.remove('hidden');
+} else if (index === 4) { // Videos
+videoSection.classList.remove('hidden');
+} else {
+mainContent.classList.remove('hidden');
+}
+closeDrawerMenu();
 }
 document.querySelectorAll('nav.fixed.bottom-0 a').forEach((link, index) => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    switchSection(index);
-  });
+link.addEventListener('click', function(e) {
+e.preventDefault();
+switchSection(index);
+});
 });
 document.querySelectorAll('.drawer-link').forEach((link) => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    const sectionIndex = parseInt(this.dataset.section);
-    switchSection(sectionIndex);
-  });
+link.addEventListener('click', function(e) {
+e.preventDefault();
+const sectionIndex = parseInt(this.dataset.section);
+switchSection(sectionIndex);
+});
 });
 </script>
 </body>
